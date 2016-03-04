@@ -87,7 +87,7 @@ void getHost(int serverPort, string servIP, char* name){
 
 	/*place name in array*/
 	for(int i = 0; i <= strlen(name)); i++){
-		if(i == strlen(name){
+		if(i == strlen(name)){
 			buf[sizeof(struct HEADER)+i] = 0;	
 		}
 		else{

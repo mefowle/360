@@ -96,7 +96,7 @@ void getHost(int serverPort, string servIP, char* name){
 	}
 	
 	/*Point question to end of header & name*/
-	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + ];
+	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + 2];
 	
 	//question->name = (unsigned char *) name;						/*Name of website*/
 	question->Q_TYPE = 1;
