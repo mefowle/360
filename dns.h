@@ -21,7 +21,9 @@ public:
 	unsigned char QR :1;				//QR - 1 bit
 
 	unsigned char RCODE :4;			//RCODE - 4 bit
-	unsigned char Z :3;				//Z - 3 bit
+	unsigned char CD :1;
+	unsigned char AD :1;	
+	unsigned char Z :1;				//Z - 3 bit
 	unsigned char RA :1;				//RA - 1 bit
 	
 	/*Question and Answer*/

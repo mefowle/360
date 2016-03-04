@@ -73,6 +73,8 @@ void getHost(int serverPort, string servIP, char* name){
 	dnsHeader->TC = 0;							/*Not truncated*/
 	dnsHeader->RD = 1;							/*Recursion desired*/
 	dnsHeader->RA = 0;							
+	dnsHeader->CD = 0;
+	dnsHeader->AD = 0;	
 	dnsHeader->Z = 0;
 	dnsHeader->RCODE = 0;
 	
