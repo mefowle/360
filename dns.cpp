@@ -81,48 +81,23 @@ void getHost(int serverPort, string servIP, char* name){
 	dnsHeader->N_COUNT	= 0;					/*Disregard*/
 	dnsHeader->AR_COUNT = 0;					/*Disregard*/
 	
-	
-	
-	//cout << dnsHeader->ID << endl;
-	//cout << dnsHeader->QR << endl;							/*0 for query*/
-	//cout << dnsHeader->OpCode << endl;					/*Standard query*/ 
-	//cout << dnsHeader->AA << endl;
-	//cout << dnsHeader->TC << endl;							/*Not truncated*/
-	//cout << dnsHeader->RD << endl;							/*Recursion desired*/
-	//cout << dnsHeader->RA << endl;							
-	//cout << dnsHeader->Z << endl;
-	//cout << dnsHeader->RCODE << endl;
-	
-	//cout << dnsHeader->Q_COUNT << endl;					/*1 question*/
-	//cout << dnsHeader->A_COUNT << endl;					/*0 answers*/
-	//cout << dnsHeader->N_COUNT << endl;					/*Disregard*/
-	//cout << dnsHeader->AR_COUNT << endl;					/*Disregard*/
-	
-	cout << sizeof(dnsHeader)<<endl;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	name = convertName(name);
+
+	for(int i = 0; i < strlen(name); i++){
+		buf[sizeof(struct HEADER)+1+i] = name[i];	
+	}
 	
 	/*Point question to end of header*/
-	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+1];
+	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + 1];
 	
-	question->name = (unsigned char *) name;						/*Name of website*/
+	//question->name = (unsigned char *) name;						/*Name of website*/
 	question->Q_TYPE = 1;
 	question->Q_CLASS = 1;
 
 	cout << "Sending packet...\n";
-	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION),0,(struct sockaddr*)&destination, sizeof(destination))<0){
+	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+1),0,(struct sockaddr*)&destination, sizeof(destination))<0){
 		cout << "Error Sending";
 	}
 	cout << "Done.\n";
