@@ -86,19 +86,24 @@ void getHost(int serverPort, string servIP, char* name){
 	name = convertName(name);
 
 	/*place name in array*/
-	for(int i = 0; i < strlen(name); i++){
-		buf[sizeof(struct HEADER)+i] = name[i];	
+	for(int i = 0; i <= strlen(name); i++){
+		if(i == strlen(name){
+			buf[sizeof(struct HEADER)+i] = 0;	
+		}
+		else{
+			buf[sizeof(struct HEADER)+i] = name[i];	
+		}
 	}
 	
 	/*Point question to end of header & name*/
-	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + 1];
+	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + ];
 	
 	//question->name = (unsigned char *) name;						/*Name of website*/
 	question->Q_TYPE = 1;
 	question->Q_CLASS = 1;
 
 	cout << "Sending packet...\n";
-	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+1),0,(struct sockaddr*)&destination, sizeof(destination))<0){
+	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+2),0,(struct sockaddr*)&destination, sizeof(destination))<0){
 		cout << "Error Sending";
 	}
 	cout << "Done.\n";
