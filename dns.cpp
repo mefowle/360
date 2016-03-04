@@ -84,7 +84,7 @@ void getHost(int serverPort, string servIP, char* name){
 
 	
 	name = convertName(name);
-	cout << name << endl;
+
 	/*place name in array*/
 	for(int i = 0; i <= strlen(name); i++){
 		if(i == strlen(name)){
@@ -103,7 +103,7 @@ void getHost(int serverPort, string servIP, char* name){
 	question->Q_CLASS = 1;
 
 	cout << "Sending packet...\n";
-	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+2),0,(struct sockaddr*)&destination, sizeof(destination))<0){
+	if(sendto(soc, (char*)buf, sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+1),0,(struct sockaddr*)&destination, sizeof(destination))<0){
 		cout << "Error Sending";
 	}
 	cout << "Done.\n";
@@ -128,6 +128,7 @@ void getHost(int serverPort, string servIP, char* name){
 	reader = &buf[sizeof(struct HEADER) + sizeof(struct QUESTION)];
 	
 	cout <<"The response contains\n";
+	cout << ntohs(dnsHeader->Q_COUNT) <<"Questions.\n";	cout <<"The response contains\n";
 	cout << ntohs(dnsHeader->Q_COUNT) <<"Questions.\n";
 	
 }

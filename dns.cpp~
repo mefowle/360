@@ -84,7 +84,7 @@ void getHost(int serverPort, string servIP, char* name){
 
 	
 	name = convertName(name);
-	cout << name << endl;
+
 	/*place name in array*/
 	for(int i = 0; i <= strlen(name); i++){
 		if(i == strlen(name)){
