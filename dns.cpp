@@ -85,11 +85,12 @@ void getHost(int serverPort, string servIP, char* name){
 	
 	name = convertName(name);
 
+	/*place name in array*/
 	for(int i = 0; i < strlen(name); i++){
-		buf[sizeof(struct HEADER)+1+i] = name[i];	
+		buf[sizeof(struct HEADER)+i] = name[i];	
 	}
 	
-	/*Point question to end of header*/
+	/*Point question to end of header & name*/
 	question = (struct QUESTION *)&buf[sizeof(struct HEADER)+strlen(name) + 1];
 	
 	//question->name = (unsigned char *) name;						/*Name of website*/

@@ -32,6 +32,8 @@ public:
 };
 
 struct QUESTION{
+	//unsigned char *name;			//Will be variable length
+	
 	unsigned short Q_TYPE;			//16 bit
 	unsigned short Q_CLASS;			//16 bit
 };
