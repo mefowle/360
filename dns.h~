@@ -15,10 +15,13 @@ public:
 	
 	/*Information*/
 	unsigned char RD :1; 			//RD - 1 bit
-	unsigned char QR :1;				//QR - 1 bit
-	unsigned char OpCode :4;		//OpCode - 4 bit
-	unsigned char AA :1;				//AA - 1 bit
 	unsigned char TC :1;				//TC - 1 bit
+	unsigned char AA :1;				//AA - 1 bit
+	unsigned char OpCode :4;		//OpCode - 4 bit
+	unsigned char QR :1;				//QR - 1 bit
+	
+	
+	
 	
 	unsigned char RA :1;				//RA - 1 bit
 	unsigned char Z :3;				//Z - 3 bit
@@ -32,8 +35,6 @@ public:
 };
 
 struct QUESTION{
-	//unsigned char *name;			//Will be variable length
-	
 	unsigned short Q_TYPE;			//16 bit
 	unsigned short Q_CLASS;			//16 bit
 };

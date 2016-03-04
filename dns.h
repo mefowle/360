@@ -15,14 +15,14 @@ public:
 	
 	/*Information*/
 	unsigned char RD :1; 			//RD - 1 bit
-	unsigned char QR :1;				//QR - 1 bit
-	unsigned char OpCode :4;		//OpCode - 4 bit
-	unsigned char AA :1;				//AA - 1 bit
 	unsigned char TC :1;				//TC - 1 bit
-	
-	unsigned char RA :1;				//RA - 1 bit
-	unsigned char Z :3;				//Z - 3 bit
+	unsigned char AA :1;				//AA - 1 bit
+	unsigned char OpCode :4;		//OpCode - 4 bit
+	unsigned char QR :1;				//QR - 1 bit
+
 	unsigned char RCODE :4;			//RCODE - 4 bit
+	unsigned char Z :3;				//Z - 3 bit
+	unsigned char RA :1;				//RA - 1 bit
 	
 	/*Question and Answer*/
 	unsigned short Q_COUNT;			//number of questions - 16 bit
