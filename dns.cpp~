@@ -76,7 +76,7 @@ void getHost(int serverPort, string servIP, char* name){
 	dnsHeader->Z = 0;
 	dnsHeader->RCODE = 0;
 	
-	dnsHeader->Q_COUNT = 1;					/*1 question*/
+	dnsHeader->Q_COUNT = htons(1);					/*1 question*/
 	dnsHeader->A_COUNT = 0;					/*0 answers*/
 	dnsHeader->N_COUNT	= 0;					/*Disregard*/
 	dnsHeader->AR_COUNT = 0;					/*Disregard*/
@@ -86,7 +86,7 @@ void getHost(int serverPort, string servIP, char* name){
 	name = convertName(name);
 	cout << name << endl;
 	/*place name in array*/
-	for(int i = 0; i <= strlen(name)); i++){
+	for(int i = 0; i <= strlen(name); i++){
 		if(i == strlen(name)){
 			buf[sizeof(struct HEADER)+i] = 0;	
 		}

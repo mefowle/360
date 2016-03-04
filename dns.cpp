@@ -73,12 +73,10 @@ void getHost(int serverPort, string servIP, char* name){
 	dnsHeader->TC = 0;							/*Not truncated*/
 	dnsHeader->RD = 1;							/*Recursion desired*/
 	dnsHeader->RA = 0;							
-	dnsHeader->CD = 0;
-	dnsHeader->AD = 0;	
 	dnsHeader->Z = 0;
 	dnsHeader->RCODE = 0;
 	
-	dnsHeader->Q_COUNT = 1;					/*1 question*/
+	dnsHeader->Q_COUNT = htons(1);					/*1 question*/
 	dnsHeader->A_COUNT = 0;					/*0 answers*/
 	dnsHeader->N_COUNT	= 0;					/*Disregard*/
 	dnsHeader->AR_COUNT = 0;					/*Disregard*/
