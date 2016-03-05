@@ -119,6 +119,7 @@ void getHost(int serverPort, string servIP, char* name){
 	cout << "Done\n";
 	
 	dnsHeader = (struct HEADER *)buf;
+	
 	int location = sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+1);
 	reader = &buf[location];
 	
@@ -130,6 +131,7 @@ void getHost(int serverPort, string servIP, char* name){
 	unsigned long int TTL;
 	unsigned short DL;
 	location = 0;
+	char * ptr;
 	for(int i = 0; i < ntohs(dnsHeader->A_COUNT); i++){
 		location = location+3;
 		Type = reader[location];
@@ -137,21 +139,63 @@ void getHost(int serverPort, string servIP, char* name){
 		if(Type == 5){
 			location = location + 5;
 			memcpy(&TTL,&reader[location],2);
-			cout << "Time: " <<ntohs(TTL) << endl;
+			TTL = ntohs(TTL);
+			cout << "Time: " << TTL << endl;
 			location = location + 2;
+			
 			memcpy(&DL,&reader[location],2);
-			cout << "Data Length: " << ntohs(DL) << endl;
-			unsigned char address[DL];
-			for(int j = 0; j < (int) DL; j ++){
-				address[j] = reader[location];
-				location++;	
+			DL = ntohs(DL);
+			cout << "Data Length: " << DL << endl;
+			
+			location = location +2;
+			unsigned char address[DL+strlen(name)];
+			unsigned short temp;
+			unsigned char length;
+			for(int j = 0; j < DL; j ++){
+				temp = reader[location];
+				if(temp == 192){
+					location++;
+					temp = reader[location];
+					for(int k = ((int) temp-12); k < strlen(name);k++){
+						if(name[k] < 47  && name[k] > 0){
+							address[j] = '.';
+							j++;
+						}
+						else{
+							address[j] = name[k];
+							j++;
+						}
+					}
+					 
+				}
+				else{
+					address[j] = reader[location];
+					location++;	
+				}
 			}
+			
+			cout <<endl;
+			cout << "CNAME\t";
 			for(int j = 0; address[j] != '\0'; j++){
 				cout << address[j];
 			}
+			
+			cout << "\t" << TTL << "\t" << ntohs(dnsHeader->AA)<<endl;
+			cout <<"location: " << location<<endl;
+			location = location+3;
 		}		
 		if(Type == 1){
 			cout << "IP\n";
+			
+			location = location + 3;
+			memcpy(&TTL,&reader[location],4);
+			TTL = ntohs(TTL);
+			cout << "Time: " << TTL << endl;
+			location = location + 2;
+			
+			memcpy(&DL,&reader[location],2);
+			DL = ntohs(DL);
+			cout << "Data Length: " << DL << endl;
 		}
 		
 		
