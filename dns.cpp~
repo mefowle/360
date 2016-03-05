@@ -135,17 +135,17 @@ void getHost(int serverPort, string servIP, char* name){
 	for(int i = 0; i < ntohs(dnsHeader->A_COUNT); i++){
 		location = location+3;
 		Type = reader[location];
-		cout << "Type: " << Type << endl;
+		//cout << "Type: " << Type << endl;
 		if(Type == 5){
 			location = location + 5;
 			memcpy(&TTL,&reader[location],2);
 			TTL = ntohs(TTL);
-			cout << "Time: " << TTL << endl;
+			//cout << "Time: " << TTL << endl;
 			location = location + 2;
 			
 			memcpy(&DL,&reader[location],2);
 			DL = ntohs(DL);
-			cout << "Data Length: " << DL << endl;
+			//cout << "Data Length: " << DL << endl;
 			
 			location = location +2;
 			unsigned char address[DL+strlen(name)];
@@ -181,21 +181,41 @@ void getHost(int serverPort, string servIP, char* name){
 			}
 			
 			cout << "\t" << TTL << "\t" << ntohs(dnsHeader->AA)<<endl;
-			cout <<"location: " << location<<endl;
+			//cout <<"location: " << location<<endl;
 			location = location+3;
 		}		
 		if(Type == 1){
-			cout << "IP\n";
 			
-			location = location + 4;
+			
+			location = location + 3;
 			memcpy(&TTL,&reader[location],4);
 			TTL = ntohs(TTL);
-			cout << "Time: " << TTL << endl;
+			
 			location = location + 2;
 			
 			memcpy(&DL,&reader[location],2);
 			DL = ntohs(DL);
-			cout << "Data Length: " << DL << endl;
+			//cout << "Data Length: " << DL << endl;
+			
+			location = location + 2;
+			char ip[DL+3];
+			vector<unsigned short> temp;
+			for(int j = 0; j < DL; j++){
+				temp.push_back(reader[location]);
+				location++;
+			}
+			
+			cout << "IP\t";
+			
+			for(int j = 0; j < temp.size(); j++){
+				if(j != temp.size()-1){
+					cout << temp.at(j) << ".";
+				}
+				else{
+					cout << temp.at(j) << "\t";
+				}
+			}
+			cout << TTL << "\t" << ntohs(dnsHeader->AA)<<endl;
 		}
 		
 		
