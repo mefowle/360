@@ -108,13 +108,7 @@ void getHost(int serverPort, string servIP, char* name){
 	}
 	cout << "Done.\n";
 	
-	for(int i = 0; i < (sizeof(struct HEADER) + sizeof(struct QUESTION)); i++){
-		cout << buf[i];
-		if(i == 10){
-			cout << endl;
-		}
-	}
-	cout << endl;
+
 	
 	//i = sizeof destination;
 	
@@ -125,11 +119,45 @@ void getHost(int serverPort, string servIP, char* name){
 	cout << "Done\n";
 	
 	dnsHeader = (struct HEADER *)buf;
-	reader = &buf[sizeof(struct HEADER) + sizeof(struct QUESTION)];
+	int location = sizeof(struct HEADER) + sizeof(struct QUESTION) + (strlen(name)+1);
+	reader = &buf[location];
 	
 	cout <<"The response contains\n";
-	cout << ntohs(dnsHeader->Q_COUNT) <<"Questions.\n";	cout <<"The response contains\n";
-	cout << ntohs(dnsHeader->Q_COUNT) <<"Questions.\n";
+	cout << ntohs(dnsHeader->Q_COUNT) <<" Questions.\n";	
+	cout << ntohs(dnsHeader->A_COUNT) <<" Answers.\n";
+	
+	unsigned short Type;
+	unsigned long int TTL;
+	unsigned short DL;
+	location = 0;
+	for(int i = 0; i < ntohs(dnsHeader->A_COUNT); i++){
+		location = location+3;
+		Type = reader[location];
+		cout << "Type: " << Type << endl;
+		if(Type == 5){
+			location = location + 5;
+			memcpy(&TTL,&reader[location],2);
+			cout << "Time: " <<ntohs(TTL) << endl;
+			location = location + 2;
+			memcpy(&DL,&reader[location],2);
+			cout << "Data Length: " << ntohs(DL) << endl;
+			unsigned char address[DL];
+			for(int j = 0; j < (int) DL; j ++){
+				address[j] = reader[location];
+				location++;	
+			}
+			for(int j = 0; address[j] != '\0'; j++){
+				cout << address[j];
+			}
+		}		
+		if(Type == 1){
+			cout << "IP\n";
+		}
+		
+		
+		cout <<endl;
+		
+	}
 	
 }
 

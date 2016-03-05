@@ -9,7 +9,7 @@
 #include <arpa/inet.h>
 
 struct HEADER{
-public:
+
 	/*Identification*/
 	unsigned short ID;				//Id number - 16 bit
 	
@@ -19,7 +19,6 @@ public:
 	unsigned char AA :1;				//AA - 1 bit
 	unsigned char OpCode :4;		//OpCode - 4 bit
 	unsigned char QR :1;				//QR - 1 bit
-
 	unsigned char RCODE :4;			//RCODE - 4 bit
 	unsigned char Z :3;				//Z - 3 bit
 	unsigned char RA :1;				//RA - 1 bit
@@ -35,4 +34,6 @@ struct QUESTION{
 	unsigned short Q_TYPE;			//16 bit
 	unsigned short Q_CLASS;			//16 bit
 };
+
+
 
